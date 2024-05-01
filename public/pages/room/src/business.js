@@ -19,4 +19,16 @@ class Business {
     const isCurrentId = false;
     this.view.renderVideo({ userId, stream, isCurrentId });
   }
+
+  OnUserConnected = function () {
+    return (userId) => {
+      console.log("user connected!", userId);
+    };
+  };
+
+  OnUserDisconnected = function () {
+    return (userId) => {
+      console.log("user disconnected!", userId);
+    };
+  };
 }
