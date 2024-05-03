@@ -3,6 +3,10 @@ class Recorder {
     this.userName = userName;
     this.stream = stream;
     this.filename = `id:${userName}-when:${Date.now()}`;
+    this.videoType = "video/webm";
+    this.mediaRecorder = {};
+    this.recordedBlobs = [];
+    this.recordingActive = false;
   }
 
   _setup() {
@@ -20,6 +24,28 @@ class Recorder {
     return options;
   }
 
-  startRecording() {}
+  startRecording() {
+    const options = this._setup();
+
+    if (!this.stream.active) return;
+    this.mediaRecorder = new MediaRecorder(this.stream, options);
+    console.log(
+      `Created MediaRecorder ${this.mediaRecorder} with options ${options}`
+    );
+
+    this.mediaRecorder.onstop = (event) => {
+      console.log("Recorded Blobs", this.recordedBlobs);
+    };
+
+    this.mediaRecorder.ondataavailable = (event) => {
+      if (!event.data || !event.data.size) return;
+      this.recordedBlobs.push(event.data);
+    };
+
+    this.mediaRecorder.start();
+    console.log(`Media Recorded started`, this.mediaRecorder);
+    this.recordingActive = true;
+  }
+
   stopRecording() {}
 }
