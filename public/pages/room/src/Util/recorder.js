@@ -6,6 +6,7 @@ class Recorder {
     this.videoType = "video/webm";
     this.mediaRecorder = {};
     this.recordedBlobs = [];
+    this.completeRecordings = [];
     this.recordingActive = false;
   }
 
@@ -47,5 +48,16 @@ class Recorder {
     this.recordingActive = true;
   }
 
-  stopRecording() {}
+  async stopRecording() {
+    if (!this.recordingActive) return;
+    if (this.mediaRecorder.state === "inactive") return;
+
+    console.log("`Media Recorded stopped!`", this.userName);
+    this.mediaRecorder.stop();
+    this.recordingActive = false;
+
+    await Util.sleep(200);
+    this.completeRecordings.push([...this.recordedBlobs]);
+    this.recordedBlobs = [];
+  }
 }
