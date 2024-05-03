@@ -54,6 +54,19 @@ class Business {
     };
   };
 
+  onUserDisconnected() {
+    return (userId) => {
+      console.log("user disconnected!", userId);
+
+      if (this.peers.has(userId)) {
+        this.peers.get(userId).call.close();
+        this.peers.delete(userId);
+      }
+      this.view.setParticipants(this.peers.size);
+      this.view.removeVideoElement(userId);
+    };
+  }
+
   onPeerError = function () {
     return (error) => {
       console.error("error on peer!", error);
