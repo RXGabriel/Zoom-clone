@@ -7,6 +7,17 @@ class PeerBuilder {
     this.onCallReceived = defaultFunctionValue;
     this.onConnectionOpened = defaultFunctionValue;
     this.onPeerStreamReceived = defaultFunctionValue;
+    this.onCallError = defaultFunctionValue;
+    this.onCallClose = defaultFunctionValue;
+  }
+  setOnCallError(fn) {
+    this.onCallError = fn;
+    return this;
+  }
+
+  setOnCallClose(fn) {
+    this.onCallClose = fn;
+    return this;
   }
 
   setOnError(fn) {
@@ -30,6 +41,8 @@ class PeerBuilder {
 
   _prepareCallEvent(call) {
     call.on("stream", (stream) => this.onPeerStreamReceived(call, stream));
+    call.on("error", (error) => this.onCallError(call, error));
+    call.on("close", (_) => this.onCallClose(call));
     this.onCallReceived(call);
   }
 
