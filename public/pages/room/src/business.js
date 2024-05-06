@@ -18,6 +18,7 @@ class Business {
 
   async _init() {
     this.view.configureRecordButton(this.onRecordPressed.bind(this));
+    this.view.configureLeaveButton(this.onLeavePressed.bind(this));
     this.currentStream = await this.media.getCamera();
     this.socket = this.socketBuilder
       .setOnUserConnected(this.onUserConnected())
@@ -162,5 +163,9 @@ class Business {
     videosURLs.map((url) => {
       this.view.renderVideo({ url, userId });
     });
+  }
+
+  onLeavePressed() {
+    this.usersRecordings.forEach((value, key) => value.download());
   }
 }
