@@ -5,7 +5,7 @@
 
 Esse projeto é o clone do Zoom, uma plataforma de videoconferência, que oferece uma experiência robusta e segura para comunicação online. Este clone vai além das funcionalidades básicas de uma chamada de vídeo, proporcionando recursos avançados para facilitar a colaboração e a comunicação eficaz entre os usuários.
 
-## Caracteristicas:
+## Características:
 
 - Salas de Reunião Multidimensionais: Permite que múltiplos usuários se reúnam na mesma sala virtual, possibilitando a interação em tempo real.
 - Gravação de Chamadas Multiusuário: Capacidade de gravar chamadas com múltiplos usuários.
