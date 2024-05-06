@@ -109,6 +109,12 @@ class Business {
   onPeerStreamReceived() {
     return (call, stream) => {
       const callerId = call.peer;
+
+      if (this.peers.has(callerId)) {
+        console.log("calling twice, ignoring second call...", callerId);
+        return;
+      }
+
       this.addVideoStream(callerId, stream);
       this.peers.set(callerId, { call });
 
