@@ -57,11 +57,20 @@ class Business {
     };
   }
 
-  onUserDisconnected = function () {
+  onUserDisconnected() {
     return (userId) => {
       console.log("user disconnected!", userId);
+
+      if (this.peers.has(userId)) {
+        this.peers.get(userId).call.close();
+        this.peers.delete(userId);
+      }
+
+      this.view.setParticipants(this.peers.size);
+      this.stopRecording(userId);
+      this.view.removeVideoElement(userId);
     };
-  };
+  }
 
   onUserDisconnected() {
     return (userId) => {
@@ -76,11 +85,11 @@ class Business {
     };
   }
 
-  onPeerError = function () {
+  onPeerError() {
     return (error) => {
       console.error("error on peer!", error);
     };
-  };
+  }
 
   onPeerConnectionOpened() {
     return (peer) => {
